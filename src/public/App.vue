@@ -3,13 +3,17 @@
         <h1>Simon the game</h1>
         <div class="board">
             <div class="groupBtns">
-                <div class="btn btn-red"></div>
-                <div class="btn btn-yellow"></div>
-                <div class="btn btn-green"> </div>
-                <div class="btn btn-blue"></div>
+                <div class="btn btn-red" @click="handleBtnClick(1)"></div>
+                <div class="btn btn-yellow" @click="handleBtnClick(2)"></div>
+                <div class="btn btn-green" @click="handleBtnClick(3)"></div>
+                <div class="btn btn-blue" @click="handleBtnClick(4)"></div>
                 <div class="center"></div>
             </div>
         </div>
+        
+        <audio v-for="(sound, index) in sounds" :ref="'sound' + index" :key=index>
+            <source :src="sound" type="audio/mpeg">
+        </audio>
     </div>
 </template>
 
@@ -19,11 +23,24 @@
 export default {
     name: 'App', 
     data() {
-       return {}
+       return {
+           sounds: {
+               1: '/src/public/sounds/1.mp3',
+               2: '/src/public/sounds/2.mp3',
+               3: '/src/public/sounds/3.mp3',
+               4: '/src/public/sounds/4.mp3',
+           }
+       }
     },
  
     methods: {
+        playSound(idx) {
+            this.$refs['sound' + idx][0].play();
+        },
         
+        handleBtnClick(button) {
+        this.playSound(button);
+        }    
     },
 
 }
@@ -100,6 +117,10 @@ h1 {
 
 .btn:hover {
     opacity: 0.75;
+}
+
+.btn:active {
+    opacity: 1;
 }
 
 .btn-red {
