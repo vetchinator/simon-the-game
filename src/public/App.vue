@@ -177,6 +177,7 @@ h1 {
     height: 48%;
     opacity: 0.4;
     cursor: pointer;
+    transition: all .25s ease-out;
 }
 
 .btn:hover {
