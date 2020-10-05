@@ -3,11 +3,11 @@
         <h1>Simon the game</h1>
         <button @click="startgame()">Start game</button>
         <div class="board">
-            <div class="groupBtns">
-                <div class="btn btn-red" :class="{ active : activeButton == 1 && !activeInput }" @click="handleBtnClick(1)"></div>
-                <div class="btn btn-yellow" :class="{ active : activeButton == 2 && !activeInput }" @click="handleBtnClick(2)"></div>
-                <div class="btn btn-green" :class="{ active : activeButton == 3 && !activeInput }" @click="handleBtnClick(3)"></div>
-                <div class="btn btn-blue" :class="{ active : activeButton == 4 && !activeInput }" @click="handleBtnClick(4)"></div>
+            <div class="groupBtns" :class="{ activeInput: activeInput }">
+                <div class="btn btn-red" :class="{ active : activeButton == 1 }" @click="handleBtnClick(1)"></div>
+                <div class="btn btn-yellow" :class="{ active : activeButton == 2 }" @click="handleBtnClick(2)"></div>
+                <div class="btn btn-green" :class="{ active : activeButton == 3 }" @click="handleBtnClick(3)"></div>
+                <div class="btn btn-blue" :class="{ active : activeButton == 4 }" @click="handleBtnClick(4)"></div>
                 <div class="center"></div>
             </div>
         </div>
@@ -54,22 +54,23 @@ export default {
         },
 
         handleBtnClick(button) {
-            this.playSound(button);
-            let index = this.inputSeries.length;
-            //this.activeInput = true;
+            if ( this.activeInput == true ) {
+                this.playSound(button);
+                let index = this.inputSeries.length;
 
-            if ( button === this.series[index] ) {
-                this.inputSeries.push(button);
-            } else {
-                console.log('you lose');
-            }
-
-            if ( this.activeCount == this.inputSeries.length ) {
-                if ( this.activeCount === this.winCount ) {
-                    console.log('you win');
+                if ( button === this.series[index] ) {
+                    this.inputSeries.push(button);
                 } else {
-                    this.activeCount++;
-                    this.displaySerie();
+                    console.log('you lose');
+                }
+
+                if ( this.activeCount == this.inputSeries.length ) {
+                    if ( this.activeCount === this.winCount ) {
+                        console.log('you win');
+                    } else {
+                        this.activeCount++;
+                        this.displaySerie();
+                    }
                 }
             }
         },
@@ -94,15 +95,18 @@ export default {
                     this.activeButton = this.series[i];
                     this.playSound(this.activeButton); 
 
-                    console.log(this.activeButton); 
+                    //console.log(this.activeButton); 
 
                     setTimeout(() => {
                         this.activeButton = null;
+                        if (i === this.activeCount - 1) {
+                           this.activeInput = true;
+                        }    
                     }, 500); 
+                
                 },
-                1000 + (i * 1000));
-            }
-            
+                1000 + (i * 1000));     
+            }    
         } 
     },
 
@@ -134,6 +138,16 @@ body {
 h1 {
     padding: 20px 0;
     text-align: center;
+}
+
+button {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin: 0 auto;
+    padding: 5px 5px;
+    border-radius: 15px;
+    outline: none;
 }
 
 .center {
@@ -176,15 +190,18 @@ h1 {
     width: 48%;
     height: 48%;
     opacity: 0.4;
-    cursor: pointer;
     transition: all .25s ease-out;
 }
 
-.btn:hover {
+.groupBtns.activeInput .btn {
+    cursor: pointer;
+}
+
+.groupBtns.activeInput .btn:hover {
     opacity: 0.6;
 }
 
-.btn:active {
+.groupBtns.activeInput .btn:active {
     opacity: 1;
 }
 
