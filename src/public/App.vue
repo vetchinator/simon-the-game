@@ -69,6 +69,7 @@ export default {
                 if ( button === this.series[index] ) {
                     this.inputSeries.push(button);
                 } else {
+                    this.message = 'lose';
                     console.log('you lose');
                     this.activeCount = 1;
                     this.gameIsActive = false;
@@ -77,6 +78,7 @@ export default {
                 if ( this.activeCount == this.inputSeries.length ) {
                     if ( this.activeCount === this.winCount ) {
                         console.log('you win');
+                        this.message = 'win';
                     } else {
                         this.activeCount++;
                         this.displaySerie();
@@ -86,6 +88,7 @@ export default {
         },
 
         startgame() {
+            this.message = '';
             this.gameIsActive = true;
             this.generateSerie();
             this.displaySerie();
@@ -148,13 +151,13 @@ body {
 }
 
 p {
- font-size: 1.5rem;
+ font-size: 1.5em;
 }
 
 h1 {
     padding: 20px 0;
     text-align: center;
-    font-size: 2.5rem;
+
 }
 
 button {
@@ -286,12 +289,14 @@ button {
     background-color: #0026ff;
 }
 
-.slideUp-enter, .slideUp-leave-to {
-    opacity: 0;
-    transform: translateY(30px);
+@media screen and (max-width: 500px ) {
+    html {
+        font-size: 80%;
+    }
+    .board {
+        width: 300px;
+        height: 300px;
+    }    
 }
 
-.slideUp-leave-active {
-    transition: all .5s ease;
-}
 </style>
