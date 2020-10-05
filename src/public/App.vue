@@ -1,14 +1,22 @@
 <template>
     <div class="container">
         <h1>Simon the game</h1>
-        <button @click="startgame()">Start game</button>
+        
         <div class="board">
             <div class="groupBtns" :class="{ activeInput: activeInput }">
                 <div class="btn btn-red" :class="{ active : activeButton == 1 }" @click="handleBtnClick(1)"></div>
                 <div class="btn btn-yellow" :class="{ active : activeButton == 2 }" @click="handleBtnClick(2)"></div>
                 <div class="btn btn-green" :class="{ active : activeButton == 3 }" @click="handleBtnClick(3)"></div>
                 <div class="btn btn-blue" :class="{ active : activeButton == 4 }" @click="handleBtnClick(4)"></div>
-                <div class="center"></div>
+                <div class="center">
+                    <button v-if="!gameIsActive" @click="startgame()">Start game</button>
+                    <div v-else class="gameInfo">
+                        <p>Your score: </p>
+                        <div class="score">
+                        <p>{{ this.activeCount - 1  }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <audio v-for="(sound, index) in sounds" :ref="'sound' + index" :key=index>
@@ -62,6 +70,8 @@ export default {
                     this.inputSeries.push(button);
                 } else {
                     console.log('you lose');
+                    this.activeCount = 1;
+                    this.gameIsActive = false;
                 }
 
                 if ( this.activeCount == this.inputSeries.length ) {
@@ -76,6 +86,7 @@ export default {
         },
 
         startgame() {
+            this.gameIsActive = true;
             this.generateSerie();
             this.displaySerie();
         },
@@ -133,21 +144,26 @@ export default {
 body {
     background-color: #263238;
     height: 100%;
+    color: antiquewhite;
+}
+
+p {
+ font-size: 1.5rem;
 }
 
 h1 {
     padding: 20px 0;
     text-align: center;
+    font-size: 2.5rem;
 }
 
 button {
-    position: relative;
-    left: 50%;
-    transform: translate(-50%, 0);
-    margin: 0 auto;
-    padding: 5px 5px;
+    margin: auto;
+    padding: 5px 10px;
     border-radius: 15px;
     outline: none;
+    box-shadow: inset 0 0 15px #000;
+    font-size: 1.5rem;
 }
 
 .center {
@@ -162,6 +178,23 @@ button {
     left: 0;
     right: 0;
     border-radius: 50%;
+    display: flex;
+    text-align: center;
+}
+
+.gameInfo {
+    margin: auto;   
+}
+
+.score {
+    margin-top: 5px;
+    padding: 5px 10px;
+    background-color: #263238;
+    box-shadow: inset 0 0 15px #000;
+    letter-spacing: 3px;
+    font-size: 22px;
+    font-weight: bold;
+    border-radius: 10px;
 }
 
 .board {
@@ -251,5 +284,14 @@ button {
 
 .btn-blue.active {
     background-color: #0026ff;
+}
+
+.slideUp-enter, .slideUp-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.slideUp-leave-active {
+    transition: all .5s ease;
 }
 </style>
