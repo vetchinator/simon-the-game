@@ -1,19 +1,26 @@
 <template>
     <div class="container">
         <h1>Simon the game</h1>
+        <button @click="startgame()">Start game</button>
         <div class="board">
             <div class="groupBtns">
-                <div class="btn btn-red" @click="handleBtnClick(1)"></div>
-                <div class="btn btn-yellow" @click="handleBtnClick(2)"></div>
-                <div class="btn btn-green" @click="handleBtnClick(3)"></div>
-                <div class="btn btn-blue" @click="handleBtnClick(4)"></div>
+                <div class="btn btn-red" :class="{ active : activeButton == 1 && !activeInput }" @click="handleBtnClick(1)"></div>
+                <div class="btn btn-yellow" :class="{ active : activeButton == 2 && !activeInput }" @click="handleBtnClick(2)"></div>
+                <div class="btn btn-green" :class="{ active : activeButton == 3 && !activeInput }" @click="handleBtnClick(3)"></div>
+                <div class="btn btn-blue" :class="{ active : activeButton == 4 && !activeInput }" @click="handleBtnClick(4)"></div>
                 <div class="center"></div>
             </div>
         </div>
-        
         <audio v-for="(sound, index) in sounds" :ref="'sound' + index" :key=index>
             <source :src="sound" type="audio/mpeg">
         </audio>
+        <div v-show="message==='lose'">
+            <p>You lose</p>
+        </div>
+        <div v-show="message==='win'">
+            <p>You win</p>
+        </div>
+
     </div>
 </template>
 
@@ -24,6 +31,14 @@ export default {
     name: 'App', 
     data() {
        return {
+           gameIsActive: null,
+           message: '',
+           inputSeries: [],
+           series: [],
+           winCount: 6,
+           activeCount: 1,
+           activeInput: false,
+           activeButton: null,
            sounds: {
                1: '/src/public/sounds/1.mp3',
                2: '/src/public/sounds/2.mp3',
@@ -37,10 +52,58 @@ export default {
         playSound(idx) {
             this.$refs['sound' + idx][0].play();
         },
-        
+
         handleBtnClick(button) {
-        this.playSound(button);
-        }    
+            this.playSound(button);
+            let index = this.inputSeries.length;
+            //this.activeInput = true;
+
+            if ( button === this.series[index] ) {
+                this.inputSeries.push(button);
+            } else {
+                console.log('you lose');
+            }
+
+            if ( this.activeCount == this.inputSeries.length ) {
+                if ( this.activeCount === this.winCount ) {
+                    console.log('you win');
+                } else {
+                    this.activeCount++;
+                    this.displaySerie();
+                }
+            }
+        },
+
+        startgame() {
+            this.generateSerie();
+            this.displaySerie();
+        },
+        generateSerie() {
+            this.series = [];
+            for (let i = 0; i < this.winCount; i++) {
+                this.series.push(Math.floor((Math.random() * 4) + 1));   
+            }
+            console.log(this.series);
+        },
+        displaySerie() {
+            this.activeInput = false;
+            this.inputSeries = [];
+
+            for (let i = 0; i < this.activeCount; i++) {
+                let to = setTimeout(() => { 
+                    this.activeButton = this.series[i];
+                    this.playSound(this.activeButton); 
+
+                    console.log(this.activeButton); 
+
+                    setTimeout(() => {
+                        this.activeButton = null;
+                    }, 500); 
+                },
+                1000 + (i * 1000));
+            }
+            
+        } 
     },
 
 }
@@ -112,14 +175,19 @@ h1 {
 .btn {
     width: 48%;
     height: 48%;
-    opacity: 0.6;
+    opacity: 0.4;
+    cursor: pointer;
 }
 
 .btn:hover {
-    opacity: 0.75;
+    opacity: 0.6;
 }
 
 .btn:active {
+    opacity: 1;
+}
+
+.active {
     opacity: 1;
 }
 
@@ -130,11 +198,19 @@ h1 {
     top: 0;
 }
 
+.btn-red.active {
+    background-color: #ff0004;
+}
+
 .btn-green {
     background-color: green;
     position: absolute;
     right: 0;
     top: 0;
+}
+
+.btn-green.active {
+    background-color: #2bff00;
 }
 
 .btn-yellow {
@@ -144,10 +220,18 @@ h1 {
     bottom: 0;
 }
 
+.btn-yellow.active {
+    background-color: #fff700;
+}
+
 .btn-blue {
     background-color: blue;
     position: absolute;
     right: 0;
     bottom: 0;
+}
+
+.btn-blue.active {
+    background-color: #0026ff;
 }
 </style>
