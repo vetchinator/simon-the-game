@@ -2,6 +2,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+const path = require('path');
+const SRC = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
     module: {
@@ -17,7 +19,12 @@ module.exports = {
             },
             {
                 test: /\.mp3$/,
-                loader: 'file-loader'
+                loader: 'file-loader',
+                include: SRC,
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                loader: 'file-loader',
             },
         ]
     },
