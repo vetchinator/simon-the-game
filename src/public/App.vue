@@ -116,7 +116,7 @@ export default {
                         if (i === this.activeCount - 1) {
                            this.activeInput = true;
                         }    
-                    }, 500); 
+                    }, 700); 
                 
                 },
                 1000 + (i * 1000));     

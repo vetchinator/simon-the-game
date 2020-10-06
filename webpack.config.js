@@ -14,6 +14,11 @@ module.exports = {
                 loader: 'vue-loader',
                 exclude: /node_modules/
             },
+            {
+                test: /\.mp3$/,
+                include: SRC,
+                loader: 'file-loader'
+            },
         ]
     },
     plugins: [
