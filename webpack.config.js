@@ -2,6 +2,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+
 module.exports = {
     module: {
         rules: [
@@ -16,7 +17,6 @@ module.exports = {
             },
             {
                 test: /\.mp3$/,
-                include: SRC,
                 loader: 'file-loader'
             },
         ]
