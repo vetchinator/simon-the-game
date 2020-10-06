@@ -48,10 +48,10 @@ export default {
            activeInput: false,
            activeButton: null,
            sounds: {
-               1: '/src/public/sounds/1.mp3',
-               2: '/src/public/sounds/2.mp3',
-               3: '/src/public/sounds/3.mp3',
-               4: '/src/public/sounds/4.mp3',
+               1: './src/public/sounds/1.mp3',
+               2: './src/public/sounds/2.mp3',
+               3: './src/public/sounds/3.mp3',
+               4: './src/public/sounds/4.mp3',
            }
        }
     },
