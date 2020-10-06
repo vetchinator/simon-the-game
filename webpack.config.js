@@ -21,10 +21,16 @@ module.exports = {
                 test: /\.mp3$/,
                 loader: 'file-loader',
                 include: SRC,
+                options: {
+                    name: '[path][name].[ext]'
+                }
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
                 loader: 'file-loader',
+                options: {
+                    name: '[path][name].[ext]'
+                }
             },
         ]
     },
