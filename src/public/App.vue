@@ -79,6 +79,7 @@ export default {
                     if ( this.activeCount === this.winCount ) {
                         console.log('you win');
                         this.message = 'win';
+                        this.gameIsActive = false;
                     } else {
                         this.activeCount++;
                         this.displaySerie();
