@@ -4,10 +4,10 @@
         
         <div class="board">
             <div class="groupBtns" :class="{ activeInput: activeInput }">
-                <div class="btn btn-red" :class="{ active : activeButton == 1 }" @click="handleBtnClick(1)"></div>
-                <div class="btn btn-yellow" :class="{ active : activeButton == 2 }" @click="handleBtnClick(2)"></div>
-                <div class="btn btn-green" :class="{ active : activeButton == 3 }" @click="handleBtnClick(3)"></div>
-                <div class="btn btn-blue" :class="{ active : activeButton == 4 }" @click="handleBtnClick(4)"></div>
+                <div class="btn btn-red" :class="{ active : activeButton == 1 }" @click="handleBtnClick(1)" ontouchstart=""></div>
+                <div class="btn btn-yellow" :class="{ active : activeButton == 2 }" @click="handleBtnClick(2)" ontouchstart=""></div>
+                <div class="btn btn-green" :class="{ active : activeButton == 3 }" @click="handleBtnClick(3)" ontouchstart=""></div>
+                <div class="btn btn-blue" :class="{ active : activeButton == 4 }" @click="handleBtnClick(4)" ontouchstart=""></div>
                 <div class="center">
                     <button v-if="!gameIsActive" @click="startgame()">Start game</button>
                     <div v-else class="gameInfo">
@@ -16,18 +16,56 @@
                         <p>{{ this.activeCount - 1  }}</p>
                         </div>
                     </div>
-                </div>
+                </div>    
             </div>
+            <div class="message" :class="{ greenBackground : message === 'win' }" v-show="message" @click="message = null">
+                <div v-if="message==='lose'">
+                    <p>You lose</p>
+                    <p>Your score: {{ this.activeCount - 1  }}</p>
+                </div>
+                <div v-if="message==='win'">
+                    <p>Congratulations! </p>
+                    <p>You win!</p>
+                </div>
+                <p class="closeParagraph">Tap to close it</p>
+            </div>    
         </div>
+                
+        
         <audio v-for="(sound, index) in sounds" :ref="'sound' + index" :key=index>
             <source :src="sound" type="audio/mpeg">
         </audio>
-        <div v-show="message==='lose'">
-            <p>You lose</p>
-        </div>
-        <div v-show="message==='win'">
-            <p>You win</p>
-        </div>
+        <!--
+        <div class="message" v-show="message" @click="message = null">
+                <div v-show="message==='lose'">
+                    <p >You lose</p>
+                    <p>Your score: {{ this.activeCount - 1  }}</p>
+                </div>
+                <div v-show="message==='win'">
+                    <p>Congratulations! </p>
+                    
+                    <p>You win!</p>
+                </div>
+                <p class="closeParagraph">Tap here to close it</p>
+            </div> 
+        
+        <div class="message" v-show="message='win'">
+                    <div>
+                        <div v-show="message==='lose'">
+                            <p >You lose</p>
+                            <p>Your score: {{ this.activeCount - 1  }}</p>
+                        </div>
+                        <div v-show="message==='win'">
+                            <p>Congratulations! </p>
+                            
+                            <p>You win!</p>
+                        </div>
+                        <a class="button" @click="message = null">
+                            Continue
+                        </a>
+                    </div>
+                </div>
+        --> 
 
     </div>
 </template>
@@ -62,7 +100,7 @@ export default {
         },
 
         handleBtnClick(button) {
-            if ( this.activeInput == true ) {
+            if ( this.activeInput === true ) {
                 this.playSound(button);
                 let index = this.inputSeries.length;
 
@@ -70,8 +108,8 @@ export default {
                     this.inputSeries.push(button);
                 } else {
                     this.message = 'lose';
-                    console.log('you lose');
                     this.activeCount = 1;
+                    this.activeInput = false;
                     this.gameIsActive = false;
                 }
 
@@ -79,7 +117,7 @@ export default {
                     if ( this.activeCount === this.winCount ) {
                         console.log('you win');
                         this.message = 'win';
-                        this.gameIsActive = false;
+                        this.activeInput = false;
                     } else {
                         this.activeCount++;
                         this.displaySerie();
@@ -109,8 +147,6 @@ export default {
                 let to = setTimeout(() => { 
                     this.activeButton = this.series[i];
                     this.playSound(this.activeButton); 
-
-                    //console.log(this.activeButton); 
 
                     setTimeout(() => {
                         this.activeButton = null;
@@ -149,6 +185,7 @@ body {
     background-color: #263238;
     height: 100%;
     color: antiquewhite;
+    text-shadow: 0 -1px 2px rgba(0,0,0,.2);
 }
 
 p {
@@ -213,6 +250,11 @@ button {
     padding: 20px;
 }
 
+.darkBackground {
+    z-index: 6;
+    background: rgba(0,0,0,0.6);
+}
+
 .groupBtns {
     width: 100%;
     height: 100%;
@@ -228,7 +270,10 @@ button {
     height: 48%;
     opacity: 0.4;
     transition: all .25s ease-out;
+    overflow: hidden;
 }
+
+.btn:onto
 
 .groupBtns.activeInput .btn {
     cursor: pointer;
@@ -240,6 +285,7 @@ button {
 
 .groupBtns.activeInput .btn:active {
     opacity: 1;
+    overflow: hidden;
 }
 
 .active {
@@ -289,6 +335,33 @@ button {
 .btn-blue.active {
     background-color: #0026ff;
 }
+
+.message {
+    z-index: 5;
+    position: absolute; 
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(219, 22, 48);
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: palegreen;
+}
+
+.greenBackground {
+    background-color:#28a745;
+    color: gold;    
+}
+
+.closeParagraph {
+    position: absolute;
+    bottom: 40px;
+}
+
 
 @media screen and (max-width: 500px ) {
     html {
