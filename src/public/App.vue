@@ -18,17 +18,19 @@
                     </div>
                 </div>    
             </div>
-            <div class="message" :class="{ greenBackground : message === 'win' }" v-show="message" @click="message = null">
-                <div v-if="message==='lose'">
-                    <p>You lose</p>
-                    <p>Your score: {{ this.activeCount - 1  }}</p>
-                </div>
-                <div v-if="message==='win'">
-                    <p>Congratulations! </p>
-                    <p>You win!</p>
-                </div>
-                <p class="closeParagraph">Tap to close it</p>
-            </div>    
+            <transition name="scale">
+                <div class="message" :class="{ greenBackground : message === 'win' }" v-show="message" @click="message = null">
+                    <div v-if="message==='lose'">
+                        <p>You lose</p>
+                        <p>Your score: {{ this.activeCount - 1  }}</p>
+                    </div>
+                    <div v-if="message==='win'">
+                        <p>Congratulations! </p>
+                        <p>You win!</p>   
+                    </div>
+                    <p class="closeParagraph">Tap to close it</p>
+                </div> 
+            </transition>   
         </div>
                 
         
@@ -378,6 +380,7 @@ h1 {
     flex-direction: column;
     justify-content: center;
     color: palegreen;
+    border-radius: 50%;
 }
 
 .greenBackground {
@@ -388,6 +391,13 @@ h1 {
 .closeParagraph {
     position: absolute;
     bottom: 40px;
+}
+
+.scale-enter-active, .scale-leave-active {
+    transition: all .4s;
+}
+.scale-enter, .scale-leave-to {
+    transform: scale(0);
 }
 
 
