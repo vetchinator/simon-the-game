@@ -22,7 +22,7 @@
                 <div class="message" :class="{ greenBackground : message === 'win' }" v-show="message" @click="message = null">
                     <div v-if="message==='lose'">
                         <p>You lose</p>
-                        <p>Your score: {{ this.activeCount - 1  }}</p>
+                        <p>Your score: {{ this.activeCount - 1 }}</p>
                     </div>
                     <div v-if="message==='win'">
                         <p>Congratulations! </p>
@@ -110,7 +110,7 @@ export default {
                     this.inputSeries.push(button);
                 } else {
                     this.message = 'lose';
-                    this.activeCount = 1;
+
                     this.activeInput = false;
                     this.gameIsActive = false;
                 }
@@ -130,7 +130,8 @@ export default {
 
         startgame() {
             this.message = '';
-            setTimeout(() => {this.gameIsActive = true;}, 200)
+            this.activeCount = 1;
+            setTimeout(() => {this.gameIsActive = true;}, 200);
             this.generateSerie();
             this.displaySerie();
         },
