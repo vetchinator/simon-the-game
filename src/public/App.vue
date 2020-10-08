@@ -169,27 +169,21 @@ export default {
 * {
     margin: 0;
     padding: 0;
-}
-
-#app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    max-width: 1920px;
-    margin: 0 auto;
+    font-family: 'Verdana', 'Avenir', Helvetica, Arial, sans-serif;
 }
 
 body {
     background-color: #263238;
-    height: 100%;
     color: antiquewhite;
-    text-shadow: 0 -1px 2px rgba(0,0,0,.2);
+    text-shadow: 0 -1px 2px rgba(0,0,0,.2); 
+}
+
+.container {
+    margin-top: 6%;
 }
 
 p {
- font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 h1 {
@@ -273,8 +267,6 @@ button {
     overflow: hidden;
 }
 
-.btn:onto
-
 .groupBtns.activeInput .btn {
     cursor: pointer;
 }
@@ -343,7 +335,7 @@ button {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(219, 22, 48);
+    background-color: rgba(219, 22, 48, 0.9);
     text-align: center;
     align-items: center;
     display: flex;
