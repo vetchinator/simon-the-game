@@ -9,7 +9,7 @@
                 <div class="btn btn-green" :class="{ active : activeButton == 3 }" @click="handleBtnClick(3)" ontouchstart=""></div>
                 <div class="btn btn-blue" :class="{ active : activeButton == 4 }" @click="handleBtnClick(4)" ontouchstart=""></div>
                 <div class="center">
-                    <button v-if="!gameIsActive" @click="startgame()">Start game</button>
+                    <div class="btnStart" v-if="!gameIsActive" @click="startgame()">Start game</div>
                     <div v-else class="gameInfo">
                         <p>Your score: </p>
                         <div class="score">
@@ -128,7 +128,7 @@ export default {
 
         startgame() {
             this.message = '';
-            this.gameIsActive = true;
+            setTimeout(() => {this.gameIsActive = true;}, 200)
             this.generateSerie();
             this.displaySerie();
         },
@@ -142,11 +142,12 @@ export default {
         displaySerie() {
             this.activeInput = false;
             this.inputSeries = [];
-
+            
             for (let i = 0; i < this.activeCount; i++) {
                 let to = setTimeout(() => { 
                     this.activeButton = this.series[i];
                     this.playSound(this.activeButton); 
+                    
 
                     setTimeout(() => {
                         this.activeButton = null;
@@ -192,13 +193,48 @@ h1 {
 
 }
 
-button {
+/*button {
     margin: auto;
     padding: 5px 10px;
     border-radius: 15px;
     outline: none;
     box-shadow: inset 0 0 15px #000;
     font-size: 1.5rem;
+}*/
+
+.btnStart {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 80%;
+    height: 80%;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: rgba(255,255,255,.6);
+    text-shadow: 1px 1px rgba(0,0,0,.3);
+    border-radius: 50%;
+     background: rgb(10,120,10);
+    box-shadow:
+    inset 0 0 3px 1px rgba(0,0,0,.8),
+    inset rgba(0,0,0,.3) -5px -5px 8px 5px,
+    inset rgba(255,255,255,.5) 5px 5px 8px 5px,
+    1px 1px 1px rgba(255,255,255,.1),
+    -2px -2px 5px rgba(0,0,0,.5);
+    transition: .2s;
+}
+.btnStart:hover {
+    color: rgba(255,255,255,.9);
+    background: rgb(20,130,20);
+}
+.btnStart:active {
+    background: rgb(0,110,0);
+    box-shadow:
+    inset 0 0 5px 3px rgba(0,0,0,.8),
+    inset rgba(0,0,0,.3) -5px -5px 8px 5px,
+    inset rgba(255,255,255,.5) 5px 5px 8px 5px,
+    1px 1px 1px rgba(255,255,255,.2),
+    -2px -2px 5px rgba(0,0,0,.5);
+    outline: none;
 }
 
 .center {
