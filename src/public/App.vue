@@ -3,17 +3,19 @@
         <h1>Simon the game</h1>
         <div class="selectMode" v-show="!gameIsActive">
             <p>Select mode</p>
-            <div>
-                <input type="radio" id="easy" value='1500' v-model="modGame">
-                <label for="easy">Easy</label>
-            </div>
-            <div>
-                <input type="radio" id="normal" value='1000' v-model="modGame">
-                <label for="normal">Normal</label>
-            </div>
-            <div>
-                <input type="radio" id="hard" value='400' v-model="modGame">
-                <label for="hard">Hard</label>
+            <div class="formRadioGroup">
+                <div class="radioGroupItem">
+                    <input type="radio" id="easy" value='1500' v-model="modGame">
+                    <label for="easy">Easy</label>
+                </div>
+                <div class="radioGroupItem">
+                    <input type="radio" id="normal" value='1000' v-model="modGame">
+                    <label for="normal">Normal</label>
+                </div>
+                <div class="radioGroupItem">
+                    <input type="radio" id="hard" value='400' v-model="modGame">
+                    <label for="hard">Hard</label>
+                </div>
             </div>
         </div>
         <div class="board">
@@ -198,7 +200,7 @@ body {
 }
 
 .container {
-    margin-top: 6%;
+    margin-top: 1%;
 }
 
 p {
@@ -211,23 +213,20 @@ h1 {
 }
 
 .selectMode {
-    margin: 10px auto;
+    margin: 0px auto 15px;
     text-align: center;
     display: flex;
     flex-direction: column;
 }
 
-.selectMode div {
-    border: 1px solid black;
-    padding: 5px; 
-}
 
 .btnStart {
     display: flex;
     align-items: center;
     margin: auto;
-    width: 80%;
-    height: 80%;
+    width: 75%;
+    height: 75%;
+    padding: 10px;
     font-size: 1.6em;
     font-weight: bold;
     color: rgba(255,255,255,.6);
@@ -416,8 +415,57 @@ h1 {
 .scale-enter-active, .scale-leave-active {
     transition: all .4s;
 }
+
 .scale-enter, .scale-leave-to {
     transform: scale(0);
+}
+
+.formRadioGroup {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;  
+    text-align: center;
+    justify-content: center;
+}
+
+.radioGroupItem input[type=radio] {
+	display: none;
+}
+
+.radioGroupItem label {
+	display: inline-block;
+	cursor: pointer;
+	padding: 5px 15px;
+	line-height: 34px;
+    font-size: 1.5em;
+	border: 1px solid #999;
+	border-right: none;
+	user-select: none;
+}
+ 
+.formRadioGroup .radioGroupItem:first-child label {
+	border-radius: 6px 0 0 6px;
+}
+
+.formRadioGroup .radioGroupItem:last-child label {
+	border-radius: 0 6px 6px 0;
+	border-right: 1px solid #999;
+}
+ 
+/* Checked */
+.formRadioGroup input[type=radio]:checked + label {
+	background: #147e4c;
+}
+ 
+/* Hover */
+.formRadioGroup label:hover {
+	color: aliceblue;
+}
+ 
+/* Disabled */
+.formRadioGroup input[type=radio]:disabled + label {
+	background: #efefef;
+	color: #666;
 }
 
 
@@ -425,10 +473,18 @@ h1 {
     html {
         font-size: 80%;
     }
+
     .board {
         width: 300px;
         height: 300px;
-    }    
+    }   
+
+    .radioGroupItem label {
+        padding: 0px 15px;
+        line-height: 25px;
+        font-size: 1em;
+    }
+ 
 }
 
 </style>
