@@ -1,23 +1,25 @@
 <template>
     <div class="container">
         <h1>Simon the game</h1>
-        <div class="selectMode" v-show="!gameIsActive">
-            <p>Select mode</p>
-            <div class="formRadioGroup">
-                <div class="radioGroupItem">
-                    <input type="radio" id="easy" value='1500' v-model="modGame">
-                    <label for="easy">Easy</label>
-                </div>
-                <div class="radioGroupItem">
-                    <input type="radio" id="normal" value='1000' v-model="modGame">
-                    <label for="normal">Normal</label>
-                </div>
-                <div class="radioGroupItem">
-                    <input type="radio" id="hard" value='400' v-model="modGame">
-                    <label for="hard">Hard</label>
+        <transition name="scale">
+            <div class="selectMode" v-show="!gameIsActive && !message">
+                <p>Select mode</p>
+                <div class="formRadioGroup">
+                    <div class="radioGroupItem">
+                        <input type="radio" id="easy" value='1500' v-model="modGame">
+                        <label for="easy">Easy</label>
+                    </div>
+                    <div class="radioGroupItem">
+                        <input type="radio" id="normal" value='1000' v-model="modGame">
+                        <label for="normal">Normal</label>
+                    </div>
+                    <div class="radioGroupItem">
+                        <input type="radio" id="hard" value='400' v-model="modGame">
+                        <label for="hard">Hard</label>
+                    </div>
                 </div>
             </div>
-        </div>
+        </transition>
         <div class="board">
             <div class="groupBtns" :class="{ activeInput: activeInput }">
                 <div class="btn btn-red" :class="{ active : activeButton == 1 }" @click="handleBtnClick(1)" ontouchstart=""></div>
