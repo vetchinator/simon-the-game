@@ -2,36 +2,63 @@
 * {
     margin: 0;
     padding: 0;
-}
-#app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    max-width: 1920px;
-    margin: 0 auto;
+    font-family: 'Verdana', 'Avenir', Helvetica, Arial, sans-serif;
 }
 body {
     background-color: #263238;
-    height: 100%;
     color: antiquewhite;
     text-shadow: 0 -1px 2px rgba(0,0,0,.2);
 }
+.container {
+    margin-top: 1%;
+}
 p {
- font-size: 1.5em;
+    font-size: 1.5em;
 }
 h1 {
     padding: 20px 0;
     text-align: center;
 }
-button {
+.selectMode {
+    margin: 0px auto 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+.btnStart {
+    display: flex;
+    align-items: center;
     margin: auto;
-    padding: 5px 10px;
-    border-radius: 15px;
+    width: 75%;
+    height: 75%;
+    padding: 10px;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: rgba(255,255,255,.6);
+    text-shadow: 1px 1px rgba(0,0,0,.3);
+    border-radius: 50%;
+     background: rgb(10,120,10);
+    box-shadow:
+    inset 0 0 3px 1px rgba(0,0,0,.8),
+    inset rgba(0,0,0,.3) -5px -5px 8px 5px,
+    inset rgba(255,255,255,.5) 5px 5px 8px 5px,
+    1px 1px 1px rgba(255,255,255,.1),
+    -2px -2px 5px rgba(0,0,0,.5);
+    transition: .2s;
+}
+.btnStart:hover {
+    color: rgba(255,255,255,.9);
+    background: rgb(20,130,20);
+}
+.btnStart:active {
+    background: rgb(0,110,0);
+    box-shadow:
+    inset 0 0 5px 3px rgba(0,0,0,.8),
+    inset rgba(0,0,0,.3) -5px -5px 8px 5px,
+    inset rgba(255,255,255,.5) 5px 5px 8px 5px,
+    1px 1px 1px rgba(255,255,255,.2),
+    -2px -2px 5px rgba(0,0,0,.5);
     outline: none;
-    box-shadow: inset 0 0 15px #000;
-    font-size: 1.5rem;
 }
 .center {
     width: 50%;
@@ -92,8 +119,6 @@ button {
     transition: all .25s ease-out;
     overflow: hidden;
 }
-.btn:onto
-
 .groupBtns.activeInput .btn {
     cursor: pointer;
 }
@@ -150,21 +175,71 @@ button {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(219, 22, 48);
+    background-color: rgba(219, 22, 48, 0.9);
     text-align: center;
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     color: palegreen;
+    border-radius: 50%;
 }
 .greenBackground {
-    background-color:#28a745;
+    background-color:rgb(40, 167, 69, 0.9);
     color: gold;
 }
 .closeParagraph {
     position: absolute;
     bottom: 40px;
+}
+.scale-enter-active, .scale-leave-active {
+    transition: all .4s;
+}
+.scale-enter, .scale-leave-to {
+    transform: scale(0);
+}
+.formRadioGroup {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;  
+    text-align: center;
+    justify-content: center;
+}
+.radioGroupItem input[type=radio] {
+	display: none;
+}
+.radioGroupItem label {
+	display: inline-block;
+	cursor: pointer;
+	padding: 5px 15px;
+	line-height: 34px;
+    font-size: 1.5em;
+	border: 1px solid #999;
+	border-right: none;
+	user-select: none;
+}
+.formRadioGroup .radioGroupItem:first-child label {
+	border-radius: 6px 0 0 6px;
+}
+.formRadioGroup .radioGroupItem:last-child label {
+	border-radius: 0 6px 6px 0;
+	border-right: 1px solid #999;
+}
+ 
+/* Checked */
+.formRadioGroup input[type=radio]:checked + label {
+	background: #147e4c;
+}
+ 
+/* Hover */
+.formRadioGroup label:hover {
+	color: aliceblue;
+}
+ 
+/* Disabled */
+.formRadioGroup input[type=radio]:disabled + label {
+	background: #efefef;
+	color: #666;
 }
 @media screen and (max-width: 500px ) {
 html {
@@ -173,6 +248,11 @@ html {
 .board {
         width: 300px;
         height: 300px;
+}
+.radioGroupItem label {
+        padding: 0px 15px;
+        line-height: 25px;
+        font-size: 1em;
 }
 }
 
