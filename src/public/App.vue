@@ -224,6 +224,7 @@ h1 {
 
 .btnStart {
     display: flex;
+    cursor: pointer;
     align-items: center;
     margin: auto;
     width: 75%;
