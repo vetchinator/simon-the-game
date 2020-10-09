@@ -125,7 +125,6 @@ export default {
                     this.inputSeries.push(button);
                 } else {
                     this.message = 'lose';
-
                     this.activeInput = false;
                     this.gameIsActive = false;
                 }
@@ -135,6 +134,7 @@ export default {
                         console.log('you win');
                         this.message = 'win';
                         this.activeInput = false;
+                        this.gameIsActive = false;
                     } else {
                         this.activeCount++;
                         this.displaySerie();
@@ -150,13 +150,14 @@ export default {
             this.generateSerie();
             this.displaySerie();
         },
+        
         generateSerie() {
             this.series = [];
             for (let i = 0; i < this.winCount; i++) {
                 this.series.push(Math.floor((Math.random() * 4) + 1));   
             }
-            console.log(this.series);
         },
+
         displaySerie() {
             this.activeInput = false;
             this.inputSeries = [];
