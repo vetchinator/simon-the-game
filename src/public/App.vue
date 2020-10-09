@@ -1,7 +1,21 @@
 <template>
     <div class="container">
         <h1>Simon the game</h1>
-        
+        <div class="selectMode" v-show="!gameIsActive">
+            <p>Select mode</p>
+            <div>
+                <input type="radio" id="easy" value='1500' v-model="modGame">
+                <label for="easy">Easy</label>
+            </div>
+            <div>
+                <input type="radio" id="normal" value='1000' v-model="modGame">
+                <label for="normal">Normal</label>
+            </div>
+            <div>
+                <input type="radio" id="hard" value='400' v-model="modGame">
+                <label for="hard">Hard</label>
+            </div>
+        </div>
         <div class="board">
             <div class="groupBtns" :class="{ activeInput: activeInput }">
                 <div class="btn btn-red" :class="{ active : activeButton == 1 }" @click="handleBtnClick(1)" ontouchstart=""></div>
@@ -87,6 +101,7 @@ export default {
            activeCount: 1,
            activeInput: false,
            activeButton: null,
+           modGame: '1500',
            sounds: {
                1: './src/public/sounds/1.mp3',
                2: './src/public/sounds/2.mp3',
@@ -150,17 +165,16 @@ export default {
                 let to = setTimeout(() => { 
                     this.activeButton = this.series[i];
                     this.playSound(this.activeButton); 
-                    
 
                     setTimeout(() => {
                         this.activeButton = null;
                         if (i === this.activeCount - 1) {
                            this.activeInput = true;
                         }    
-                    }, 700); 
+                    }, +this.modGame / 2); 
                 
                 },
-                1000 + (i * 1000));     
+                1000 + (i * +this.modGame));     
             }    
         } 
     },
@@ -193,17 +207,19 @@ p {
 h1 {
     padding: 20px 0;
     text-align: center;
-
 }
 
-/*button {
-    margin: auto;
-    padding: 5px 10px;
-    border-radius: 15px;
-    outline: none;
-    box-shadow: inset 0 0 15px #000;
-    font-size: 1.5rem;
-}*/
+.selectMode {
+    margin: 10px auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.selectMode div {
+    border: 1px solid black;
+    padding: 5px; 
+}
 
 .btnStart {
     display: flex;
@@ -225,10 +241,12 @@ h1 {
     -2px -2px 5px rgba(0,0,0,.5);
     transition: .2s;
 }
+
 .btnStart:hover {
     color: rgba(255,255,255,.9);
     background: rgb(20,130,20);
 }
+
 .btnStart:active {
     background: rgb(0,110,0);
     box-shadow:
@@ -385,7 +403,7 @@ h1 {
 }
 
 .greenBackground {
-    background-color:#28a745;
+    background-color:rgb(40, 167, 69, 0.9);
     color: gold;    
 }
 
